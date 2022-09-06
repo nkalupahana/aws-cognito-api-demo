@@ -13,8 +13,8 @@ const AuthCallback = () => {
                   },
                   body: `grant_type=authorization_code&code=${code}&client_id=5cpfhft5pf8877epe31kinanb8&redirect_uri=http://localhost:3000/callback`
             }).then(resp => resp.json()).then(data => {
-                if ("access_token" in data) {
-                    localStorage.setItem("tokens", JSON.stringify(data));
+                if ("id_token" in data) {
+                    localStorage.setItem("id_token", data.id_token);
                     window.location.replace("/");
                 }
             });

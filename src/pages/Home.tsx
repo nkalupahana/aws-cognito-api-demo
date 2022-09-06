@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 
 AWS.config.update({"region": "us-east-1"});
 
-const tokens = localStorage.getItem("tokens");
+const idToken = localStorage.getItem("id_token");
 let client: DynamoDB.DocumentClient | undefined = undefined;
-if (tokens) {
+if (idToken) {
     client = new DynamoDB.DocumentClient({
         credentials: new CognitoIdentityCredentials({
             IdentityPoolId: "us-east-1:824220c5-3885-42a2-afbc-3d9480d3d55e",
             Logins: {
-                "cognito-idp.us-east-1.amazonaws.com/us-east-1_SOd98gjVq": JSON.parse(tokens).id_token,
+                "cognito-idp.us-east-1.amazonaws.com/us-east-1_SOd98gjVq": idToken,
             },
         }),
     });
@@ -48,7 +48,7 @@ const Home = () => {
         { client && <> 
             <p>Signed in!</p>
             <input type="button" value="Logout" onClick={() => {
-                localStorage.removeItem("tokens");
+                localStorage.removeItem("id_token");
                 window.location.replace("/");
             }} />
             <table>
